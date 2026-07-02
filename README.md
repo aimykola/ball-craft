@@ -89,7 +89,7 @@ git push origin main
 
 ```bash
 npm i -g vercel
-vercel        # превȁ9ю-деплой
+vercel        # прев'ю-деплой
 vercel --prod # продакшн
 ```
 
