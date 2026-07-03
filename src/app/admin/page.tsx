@@ -257,7 +257,7 @@ function SettingsTab() {
     <div style={{ marginBottom: 10 }}><label className="fld">{label}</label><input className="input" value={s[key] || ''} onChange={e => setS({ ...s, [key]: e.target.value })} /></div>
   )
   return (
-    <div className="card" style={{ padding: 20, maxWidth: 560 }}>
+    <div className="card" style={{ padding: 20 }}>
       {field('hero_title', 'Заголовок (hero)')}
       {field('hero_subtitle', 'Опис (hero)')}
       {field('phone', 'Телефон')}
