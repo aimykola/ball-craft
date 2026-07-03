@@ -1,9 +1,11 @@
 'use client'
 import Link from 'next/link'
 import { useCart } from '@/components/cart/CartContext'
+import { useFavorites } from '@/components/favorites/FavoritesContext'
 
 export default function Header() {
   const { count, open } = useCart()
+  const { count: favCount, open: openFavorites } = useFavorites()
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,.85)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 66 }}>
@@ -14,7 +16,11 @@ export default function Header() {
           <Link href="#catalog" className="nav-link">Каталог</Link>
           <Link href="#reviews" className="nav-link">Відгуки</Link>
           <Link href="#contacts" className="nav-link">Контакти</Link>
-<Link href="/account" className="nav-link" aria-label="Кабінет" style={{ display: 'flex', alignItems: 'center' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></Link>
+          <Link href="/account" className="nav-link" aria-label="Кабінет" style={{ display: 'flex', alignItems: 'center' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></Link>
+          <button onClick={openFavorites} aria-label="Вподобані" style={{ display: 'flex', alignItems: 'center', position: 'relative', background: 'none', border: 'none', padding: 0, color: 'inherit' }}>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"></path></svg>
+            {favCount > 0 && <span style={{ position: 'absolute', top: -8, right: -10, background: 'var(--accent-deep)', color: '#fff', borderRadius: '50%', fontSize: 10, width: 16, height: 16, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>{favCount}</span>}
+          </button>
           <button className="btn btn-primary" onClick={open} style={{ padding: '9px 16px' }}>
             Кошик{count > 0 ? ` · ${count}` : ''}
           </button>
