@@ -98,9 +98,8 @@ export function Reviews() {
 export function Footer() {
   return (
     <footer style={{ borderTop: '1px solid var(--line)', padding: '36px 0', background: 'var(--bg-soft)' }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 16, fontSize: 14 }}>
-        <span style={{ fontWeight: 800 }}>Tennis Coffee Table</span>
-        <span className="muted">© {new Date().getFullYear()} · Екодизайн з тенісних мʼячів</span>
+      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 14 }}>
+        <span className="muted">© {new Date().getFullYear()} · <span style={{ fontWeight: 800, textTransform: 'uppercase', letterSpacing: '.03em' }}>Tennis</span><span style={{ fontWeight: 400, textTransform: 'uppercase', letterSpacing: '.03em' }}> Coffee Table</span></span>
       </div>
     </footer>
   )
