@@ -8,7 +8,7 @@ export default function Header() {
     <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,.85)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
       <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 66 }}>
         <Link href="#top" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <span style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', boxShadow: 'inset 0 0 0 3px #fff, inset 0 0 0 4px var(--accent-deep)' }} />
+          <img src="/logo.png" alt="Tennis Coffee Table" style={{ height: 42, width: 42, objectFit: 'contain', display: 'block' }} />
           <span style={{ fontWeight: 800, letterSpacing: '-.02em' }}>Tennis Coffee Table</span>
         </Link>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 22, fontSize: 14, fontWeight: 600 }}>
