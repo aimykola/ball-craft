@@ -1,0 +1,27 @@
+'use client'
+import Link from 'next/link'
+import { useCart } from '@/components/cart/CartContext'
+
+export default function Header() {
+  const { count, open } = useCart()
+  return (
+    <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,.85)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 66 }}>
+        <Link href="#top" style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <span style={{ width: 30, height: 30, borderRadius: '50%', background: 'var(--accent)', display: 'inline-block', boxShadow: 'inset 0 0 0 3px #fff, inset 0 0 0 4px var(--accent-deep)' }} />
+          <span style={{ fontWeight: 800, letterSpacing: '-.02em' }}>Tennis Coffee Table</span>
+        </Link>
+        <nav style={{ display: 'flex', alignItems: 'center', gap: 22, fontSize: 14, fontWeight: 600 }}>
+          <Link href="#catalog" className="nav-link">Каталог</Link>
+          <Link href="#about" className="nav-link">Про нас</Link>
+          <Link href="#reviews" className="nav-link">Відгуки</Link>
+          <Link href="#contacts" className="nav-link">Контакти</Link>
+          <Link href="/account" className="nav-link">Кабінет</Link>
+          <button className="btn btn-primary" onClick={open} style={{ padding: '9px 16px' }}>
+            Кошик{count > 0 ? ` · ${count}` : ''}
+          </button>
+        </nav>
+      </div>
+    </header>
+  )
+}
