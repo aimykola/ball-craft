@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
-import { Nunito } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart/CartContext'
 
-const nunito = Nunito({ subsets: ['latin', 'cyrillic'], variable: '--font-sans' })
+const montserrat = Montserrat({ subsets: ['latin', 'cyrillic'], variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'Tennis Coffee Table — екодизайн з тенісних мʼячів',
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk" className={nunito.variable}>
+    <html lang="uk" className={montserrat.variable}>
       <body>
         <CartProvider>{children}</CartProvider>
       </body>
