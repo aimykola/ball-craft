@@ -12,7 +12,6 @@ export default function Header() {
         </Link>
         <nav style={{ display: 'flex', alignItems: 'center', gap: 22, fontSize: 14, fontWeight: 600 }}>
           <Link href="#catalog" className="nav-link">Каталог</Link>
-          <Link href="#about" className="nav-link">Про нас</Link>
           <Link href="#reviews" className="nav-link">Відгуки</Link>
           <Link href="#contacts" className="nav-link">Контакти</Link>
           <Link href="/account" className="nav-link">Кабінет</Link>
