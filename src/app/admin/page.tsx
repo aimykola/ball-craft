@@ -262,6 +262,8 @@ function SettingsTab() {
       {field('hero_subtitle', 'Опис (hero)')}
       {field('phone', 'Телефон')}
       {field('email', 'Email')}
+      {field('viber', 'Viber (номер або посилання)')}
+      {field('telegram', 'Telegram (посилання або @username)')}
       {field('instagram_url', 'Посилання Instagram')}
       {field('instagram_label', 'Підпис кнопки Instagram')}
       <button className="btn btn-primary" onClick={save}>Зберегти</button>
