@@ -5,9 +5,9 @@ import { useCart } from '@/components/cart/CartContext'
 import { useFavorites } from '@/components/favorites/FavoritesContext'
 import { priceWithDiscount, type Product, type Category } from '@/lib/types'
 
-function colorHex(label) {
+function colorHex(label: string) {
   const key = (label || '').trim().toLowerCase()
-  const map = {
+  const map: Record<string, string> = {
     'білий': '#ffffff', 'white': '#ffffff',
     'чорний': '#1c1e18', 'black': '#1c1e18',
     'рожевий': '#f4b6c8', 'розовий': '#f4b6c8', 'pink': '#f4b6c8',
@@ -25,7 +25,7 @@ function colorHex(label) {
   }
   return map[key] || '#e8e9e4'
 }
-function colorText(hex) {
+function colorText(hex: string) {
   const h = hex.replace('#', '')
   const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16)
   const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
