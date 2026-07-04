@@ -5,6 +5,33 @@ import { useCart } from '@/components/cart/CartContext'
 import { useFavorites } from '@/components/favorites/FavoritesContext'
 import { priceWithDiscount, type Product, type Category } from '@/lib/types'
 
+function colorHex(label) {
+  const key = (label || '').trim().toLowerCase()
+  const map = {
+    'білий': '#ffffff', 'white': '#ffffff',
+    'чорний': '#1c1e18', 'black': '#1c1e18',
+    'рожевий': '#f4b6c8', 'розовий': '#f4b6c8', 'pink': '#f4b6c8',
+    'червоний': '#e2574c', 'red': '#e2574c',
+    'синій': '#4a7bd0', 'blue': '#4a7bd0',
+    'блакитний': '#8ecae6',
+    'зелений': '#5aa469', 'green': '#5aa469',
+    'класичний': '#c8e04f', 'салатовий': '#c8e04f', 'лаймовий': '#c8e04f',
+    'жовтий': '#f2d24e', 'yellow': '#f2d24e',
+    'сірий': '#b8bcb4', 'gray': '#b8bcb4', 'grey': '#b8bcb4',
+    'бежевий': '#e8ddc7', 'beige': '#e8ddc7',
+    'коричневий': '#9c6b4a', 'brown': '#9c6b4a',
+    'помаранчевий': '#ef8a4b', 'оранжевий': '#ef8a4b', 'orange': '#ef8a4b',
+    'фіолетовий': '#8e6fb0', 'purple': '#8e6fb0',
+  }
+  return map[key] || '#e8e9e4'
+}
+function colorText(hex) {
+  const h = hex.replace('#', '')
+  const r = parseInt(h.slice(0, 2), 16), g = parseInt(h.slice(2, 4), 16), b = parseInt(h.slice(4, 6), 16)
+  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255
+  return lum > 0.6 ? '#1c1e18' : '#ffffff'
+}
+
 function ProductCard({ p }: { p: Product }) {
   const { add } = useCart()
   const { toggle, isFavorite } = useFavorites()
@@ -41,7 +68,7 @@ function ProductCard({ p }: { p: Product }) {
           <div style={{ marginBottom: 8 }}><label className="fld">Розмір:</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.size_options.map(s => <button key={s.label} onClick={() => setSize(s.label)} className={'chip' + (size === s.label ? ' active' : '')}>{s.label}</button>)}</div></div>
         )}
         {p.color_options?.length > 0 && (
-          <div style={{ marginBottom: 8 }}><label className="fld">Колір:</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.color_options.map(c => <button key={c.label} onClick={() => setColor(c.label)} className={'chip' + (color === c.label ? ' active' : '')}>{c.label}</button>)}</div></div>
+          <div style={{ marginBottom: 8 }}><label className="fld">Колір:</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.color_options.map(c => <button key={c.label} onClick={() => setColor(c.label)} className="chip" style={{ background: colorHex(c.label), color: colorText(colorHex(c.label)), borderColor: color === c.label ? 'var(--ink)' : colorHex(c.label), fontWeight: color === c.label ? 800 : 600 }}>{c.label}</button>)}</div></div>
         )}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
           <div>
