@@ -41,3 +41,12 @@ label.fld { display:block; font-size:13px; font-weight:600; margin-bottom:5px; c
 @media (min-width: 720px){ .grid.cols-2{grid-template-columns:repeat(2,1fr)} .grid.cols-3{grid-template-columns:repeat(3,1fr)} }
 .muted { color: var(--muted); }
 .hidden-scroll::-webkit-scrollbar{ display:none; }
+
+
+/* Header responsive: burger menu on mobile */
+.nav-links { display: flex; }
+.burger { display: none; }
+@media (max-width: 720px) {
+  .nav-links { display: none; }
+  .burger { display: block; }
+}
