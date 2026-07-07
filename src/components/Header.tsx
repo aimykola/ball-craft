@@ -17,7 +17,6 @@ export default function Header() {
         </Link>
         <nav className="nav-links" style={{ alignItems: 'center', gap: 22, fontSize: 14, fontWeight: 600 }}>
           <Link href="#catalog" className="nav-link">Каталог</Link>
-          <Link href="#reviews" className="nav-link">Відгуки</Link>
           <Link href="#contacts" className="nav-link">Контакти</Link>
         </nav>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18 }}>
@@ -40,7 +39,6 @@ export default function Header() {
         <div className="mobile-menu" style={{ borderTop: '1px solid var(--line)', background: '#fff' }}>
           <div className="container" style={{ display: 'flex', flexDirection: 'column', padding: '8px 20px 16px' }}>
             <Link href="#catalog" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 16, fontWeight: 600, borderBottom: '1px solid var(--line)' }}>Каталог</Link>
-            <Link href="#reviews" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 16, fontWeight: 600, borderBottom: '1px solid var(--line)' }}>Відгуки</Link>
             <Link href="#contacts" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 16, fontWeight: 600 }}>Контакти</Link>
           </div>
         </div>
