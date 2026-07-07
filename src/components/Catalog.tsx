@@ -43,8 +43,8 @@ function ProductCard({ p }: { p: Product }) {
   const hasDisc = Number(p.discount) > 0
   const finalPrice = priceWithDiscount(p)
   return (
-    <div className="card">
-      <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div className="card product-row">
+      <div style={{ position: 'relative', minHeight: 200, background: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
         {imgs[idx] ? <img src={imgs[idx]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span className="muted" style={{ fontSize: 13 }}>нема фото</span>}
         {hasDisc && <span className="badge" style={{ left: 10, background: '#ff6b6b', color: '#fff' }}>-{p.discount}%</span>}
         <span className="badge" style={{ right: 10, background: p.in_stock ? 'var(--accent)' : '#e2e4dd', color: '#1c1e18' }}>{p.in_stock ? 'В наявності' : 'Немає'}</span>
@@ -61,21 +61,21 @@ function ProductCard({ p }: { p: Product }) {
           </div>
         )}
       </div>
-      <div style={{ padding: 16 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 800 }}>{p.name}</h3>
-        {p.description && <p className="muted" style={{ fontSize: 13, margin: '4px 0 10px' }}>{p.description}</p>}
+      <div style={{ padding: 20, display: 'flex', flexDirection: 'column' }}>
+        <h3 style={{ fontSize: 20, fontWeight: 700 }}>{p.name}</h3>
+        {p.description && <p className="muted" style={{ fontSize: 14, margin: '6px 0 12px' }}>{p.description}</p>}
         {p.size_options?.length > 0 && (
           <div style={{ marginBottom: 8 }}><label className="fld">Розмір:</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.size_options.map(s => <button key={s.label} onClick={() => setSize(s.label)} className={'chip' + (size === s.label ? ' active' : '')}>{s.label}</button>)}</div></div>
         )}
         {p.color_options?.length > 0 && (
           <div style={{ marginBottom: 8 }}><label className="fld">Колір:</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.color_options.map(c => <button key={c.label} onClick={() => setColor(c.label)} className="chip" style={{ background: colorHex(c.label), color: colorText(colorHex(c.label)), borderColor: color === c.label ? 'var(--ink)' : colorHex(c.label), fontWeight: color === c.label ? 800 : 600 }}>{c.label}</button>)}</div></div>
         )}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 'auto', paddingTop: 14 }}>
           <div>
             {hasDisc && <span className="muted" style={{ textDecoration: 'line-through', fontSize: 13, marginRight: 6 }}>{p.price} ₴</span>}
-            <span style={{ fontWeight: 800, fontSize: 18 }}>{finalPrice} ₴</span>
+            <span style={{ fontWeight: 800, fontSize: 22 }}>{finalPrice} ₴</span>
           </div>
-          <button className="btn btn-primary" disabled={!p.in_stock} onClick={() => add(p, size, color)} style={{ padding: '9px 15px' }}>В кошик</button>
+          <button className="btn btn-primary" disabled={!p.in_stock} onClick={() => add(p, size, color)} style={{ padding: '10px 20px' }}>У кошик</button>
         </div>
       </div>
     </div>
@@ -128,26 +128,29 @@ export default function Catalog() {
         <h2 className="h2">Наші вироби</h2>
         <p className="lead">Столики та стільці зі скляною стільницею — обирайте під свій інтерʼєр.</p>
 
-        <div className="card" style={{ padding: 16, margin: '22px 0', display: 'flex', flexWrap: 'wrap', gap: 14, alignItems: 'flex-end' }}>
-          <div>
-            <label className="fld">Категорія:</label>
-            <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-              <button className={'chip' + (category === 'all' ? ' active' : '')} onClick={() => setCategory('all')}>Усі</button>
-              {cats.map(c => <button key={c.slug} className={'chip' + (category === c.slug ? ' active' : '')} onClick={() => setCategory(c.slug)}>{c.name}</button>)}
+        <div className="catalog-wrap" style={{ marginTop: 28 }}>
+          <aside className="filter-side">
+            <div className="fgroup">
+              <label className="fld">Категорія:</label>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                <button className={'chip' + (category === 'all' ? ' active' : '')} onClick={() => setCategory('all')}>Усі</button>
+                {cats.map(c => <button key={c.slug} className={'chip' + (category === c.slug ? ' active' : '')} onClick={() => setCategory(c.slug)}>{c.name}</button>)}
+              </div>
             </div>
+            <div className="fgroup"><label className="fld">Пошук:</label><input className="input" value={query} onChange={e => setQuery(e.target.value)} placeholder="Назва товару..." /></div>
+            <div className="fgroup"><label className="fld">Наявність:</label><select value={availability} onChange={e => setAvailability(e.target.value)} style={{ width: '100%' }}><option value="all">Усі</option><option value="in">В наявності</option><option value="out">Немає</option></select></div>
+            <div className="fgroup"><label className="fld">Сортування:</label><select value={sort} onChange={e => setSort(e.target.value)} style={{ width: '100%' }}><option value="default">За замовчуванням</option><option value="cheap">Дешевші спершу</option><option value="expensive">Дорожчі спершу</option></select></div>
+            <div className="fgroup"><label className="fld">Ціна, ₴:</label><div style={{ display: 'flex', gap: 6 }}><input className="input" style={{ width: '50%' }} value={minPrice} onChange={e => setMinPrice(e.target.value)} placeholder="від" /><input className="input" style={{ width: '50%' }} value={maxPrice} onChange={e => setMaxPrice(e.target.value)} placeholder="до" /></div></div>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600 }}><input type="checkbox" checked={onlySale} onChange={e => setOnlySale(e.target.checked)} />Лише акції</label>
+            <div className="muted" style={{ fontSize: 13, marginTop: 16 }}>Знайдено: {filtered.length}</div>
+          </aside>
+
+          <div>
+            {loading ? <p className="muted">Завантаження...</p> : filtered.length === 0 ? <p className="muted">Нічого не знайдено</p> : (
+              <div className="product-list">{filtered.map(p => <ProductCard key={p.id} p={p} />)}</div>
+            )}
           </div>
-          <div><label className="fld">Наявність:</label><select value={availability} onChange={e => setAvailability(e.target.value)} style={{ minWidth: 140 }}><option value="all">Усі</option><option value="in">В наявності</option><option value="out">Немає</option></select></div>
-          <div><label className="fld">Сортування:</label><select value={sort} onChange={e => setSort(e.target.value)} style={{ minWidth: 160 }}><option value="default">За замовчуванням</option><option value="cheap">Дешевші спершу</option><option value="expensive">Дорожчі спершу</option></select></div>
-          <div style={{ flex: 1, minWidth: 160 }}><label className="fld">Пошук:</label><input className="input" value={query} onChange={e => setQuery(e.target.value)} placeholder="Назва товару..." /></div>
-          <div><label className="fld">Ціна, ₴:</label><div style={{ display: 'flex', gap: 6 }}><input className="input" style={{ width: 80 }} value={minPrice} onChange={e => setMinPrice(e.target.value)} placeholder="від" /><input className="input" style={{ width: 80 }} value={maxPrice} onChange={e => setMaxPrice(e.target.value)} placeholder="до" /></div></div>
-          <label style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 13, fontWeight: 600 }}><input type="checkbox" checked={onlySale} onChange={e => setOnlySale(e.target.checked)} />Лише акції</label>
         </div>
-
-        <div className="muted" style={{ fontSize: 13, marginBottom: 14 }}>Знайдено: {filtered.length}</div>
-
-        {loading ? <p className="muted">Завантаження...</p> : filtered.length === 0 ? <p className="muted">Нічого не знайдено</p> : (
-          <div className="grid cols-3">{filtered.map(p => <ProductCard key={p.id} p={p} />)}</div>
-        )}
       </div>
     </section>
   )
