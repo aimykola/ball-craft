@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { Montserrat, Playfair_Display } from 'next/font/google'
+import { Forum, Cormorant } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/components/cart/CartContext'
 import { FavoritesProvider } from '@/components/favorites/FavoritesContext'
 
-const montserrat = Montserrat({ subsets: ['latin', 'cyrillic'], variable: '--font-sans' })
-const playfair = Playfair_Display({ subsets: ['latin', 'cyrillic'], variable: '--font-serif' })
+const forum = Forum({ subsets: ['latin', 'cyrillic'], weight: '400', variable: '--font-sans' })
+const cormorant = Cormorant({ subsets: ['latin', 'cyrillic'], weight: ['400', '500', '600'], variable: '--font-serif' })
 
 export const metadata: Metadata = {
   title: 'Ballcraft — вироби ручної роботи зі старих тенісних мʼячів',
@@ -14,10 +14,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="uk" className={`${montserrat.variable} ${playfair.variable}`}>
+    <html lang="uk" className={`${forum.variable} ${cormorant.variable}`}>
       <body>
         <CartProvider>
-          <FavoritesProvider>{children}</FavoritesProvider>
+          <FavoritesProvider>
+            {children}
+          </FavoritesProvider>
         </CartProvider>
       </body>
     </html>
