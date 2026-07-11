@@ -11,9 +11,9 @@ export default function Header() {
   const closeMenu = () => setMenuOpen(false)
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(246,240,228,.9)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
-      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 72 }}>
+      <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 96 }}>
         <Link href="#top" style={{ display: 'flex', alignItems: 'center' }} aria-label="Ballcraft">
-          <img src="/logo.png" alt="Ballcraft" style={{ height: 48, width: 'auto', display: 'block' }} />
+          <img src="/logo.png" alt="Ballcraft" style={{ height: 76, width: 'auto', display: 'block', mixBlendMode: 'multiply' }} />
         </Link>
         <nav className="nav-links" style={{ alignItems: 'center', gap: 30 }}>
           <Link href="#catalog" className="nav-link">Каталог</Link>
