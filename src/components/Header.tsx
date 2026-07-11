@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '@/components/cart/CartContext'
 import { useFavorites } from '@/components/favorites/FavoritesContext'
 
@@ -8,17 +8,24 @@ export default function Header() {
   const { count, open } = useCart()
   const { count: favCount, open: openFavorites } = useFavorites()
   const [menuOpen, setMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
   const closeMenu = () => setMenuOpen(false)
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,.94)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
       {/* Announcement bar */}
-      <div style={{ background: 'var(--bg-soft)', borderBottom: '1px solid var(--line)', textAlign: 'center', fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)', padding: '9px 0' }}>
+      <div style={{ background: 'var(--bg-soft)', borderBottom: scrolled ? '1px solid transparent' : '1px solid var(--line)', textAlign: 'center', fontSize: 12, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--muted)', overflow: 'hidden', transition: 'max-height .35s ease, padding .35s ease, opacity .3s ease', maxHeight: scrolled ? 0 : 40, paddingTop: scrolled ? 0 : 7, paddingBottom: scrolled ? 0 : 7, opacity: scrolled ? 0 : 1 }}>
         Безкоштовна доставка · Ручна робота на замовлення
       </div>
       {/* Centered logo row */}
-      <div className="container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 130 }}>
+      <div className="container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 148 }}>
         <Link href="#top" style={{ display: 'flex', alignItems: 'center' }} aria-label="Ballcraft">
-          <img src="/logo.png" alt="Ballcraft" style={{ height: 110, width: 'auto', display: 'block' }} />
+          <img src="/logo.png" alt="Ballcraft" style={{ height: 132, width: 'auto', display: 'block' }} />
         </Link>
         <button className="burger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Меню" aria-expanded={menuOpen} style={{ position: 'absolute', right: 0, background: 'none', border: 'none', padding: 8, cursor: 'pointer', color: 'var(--ink)' }}>
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor' }} />
