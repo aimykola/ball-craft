@@ -9,12 +9,20 @@ export default function Header() {
   const { count: favCount, open: openFavorites } = useFavorites()
   const [menuOpen, setMenuOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(true)
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
+    const onResize = () => setIsDesktop(window.innerWidth > 720)
     onScroll()
+    onResize()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
+  const hideLogo = scrolled && isDesktop
   const closeMenu = () => setMenuOpen(false)
   return (
     <header style={{ position: 'sticky', top: 0, zIndex: 40, background: 'rgba(255,255,255,.94)', backdropFilter: 'blur(10px)', borderBottom: '1px solid var(--line)' }}>
@@ -23,9 +31,9 @@ export default function Header() {
         Безкоштовна доставка · Ручна робота на замовлення
       </div>
       {/* Centered logo row */}
-      <div className="container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 148 }}>
+      <div className="container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', transition: 'max-height .35s ease, opacity .3s ease', maxHeight: hideLogo ? 0 : 104, opacity: hideLogo ? 0 : 1 }}>
         <Link href="#top" style={{ display: 'flex', alignItems: 'center' }} aria-label="Ballcraft">
-          <img src="/logo.png" alt="Ballcraft" style={{ height: 132, width: 'auto', display: 'block' }} />
+          <img src="/logo.png" alt="Ballcraft" style={{ height: 92, width: 'auto', display: 'block' }} />
         </Link>
         <button className="burger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Меню" aria-expanded={menuOpen} style={{ position: 'absolute', right: 0, background: 'none', border: 'none', padding: 8, cursor: 'pointer', color: 'var(--ink)' }}>
           <span style={{ display: 'block', width: 22, height: 1.5, background: 'currentColor' }} />
