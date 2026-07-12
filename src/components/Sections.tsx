@@ -124,7 +124,7 @@ export function Reviews() {
 }
 
 export function Footer() {
-  const { t, lang, setLang } = useLang()
+  const { lang, setLang } = useLang()
   return (
     <footer style={{ borderTop: '1px solid var(--line)', padding: '44px 0', background: 'var(--bg-soft)' }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, fontSize: 13 }}>
