@@ -5,7 +5,7 @@ import { supabase } from '@/lib/supabaseClient'
 function TableArt() {
   const balls = Array.from({ length: 15 })
   return (
-    <div style={{ position: 'relative', background: 'var(--bg-soft)', borderRadius: 4, padding: 34, minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--line)' }}>
+    <div style={{ position: 'relative', background: 'var(--bg-soft)', borderRadius: 4, padding: 34, minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--muted)' }}>
       <div style={{ position: 'relative', width: 220, height: 200 }}>
         <div style={{ position: 'absolute', top: 0, left: -10, right: -10, height: 20, borderRadius: 3, background: 'rgba(255,255,255,.95)', border: '1px solid var(--line)', boxShadow: 'var(--shadow)' }} />
         <div style={{ position: 'absolute', top: 26, left: 10, right: 10, bottom: 26, display: 'grid', gridTemplateColumns: 'repeat(5,1fr)', gap: 6, alignContent: 'center' }}>
@@ -31,8 +31,8 @@ export function Hero() {
   return (
     <section id="top" style={{ position: 'relative' }}>
       {/* Full-width editorial hero */}
-      <div style={{ position: 'relative', minHeight: 'clamp(460px,70vh,720px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg,var(--bg-soft) 0%,#efefe9 100%)', overflow: 'hidden' }}>
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: .4 }}>
+      <div style={{ position: 'relative', minHeight: 'clamp(460px,70vh,720px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg,var(--bg-soft) 0%,#efefe9 100%)', overflow: 'hidden', margin: '16px', border: '1.5px solid var(--ink)', borderRadius: 6 }}>
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: .55 }}>
           <div style={{ transform: 'scale(1.6)' }}><TableArt /></div>
         </div>
         <div style={{ position: 'relative', zIndex: 2, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(4px)', border: '1px solid var(--line)', padding: 'clamp(32px,5vw,56px)', maxWidth: 620, width: 'calc(100% - 40px)', textAlign: 'center' }}>
