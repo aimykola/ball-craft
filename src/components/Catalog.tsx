@@ -34,7 +34,7 @@ function colorText(hex: string) {
 }
 
 function ProductCard({ p }: { p: Product }) {
-  const { t } = useLang()
+  const { t, td } = useLang()
   const { add } = useCart()
   const { toggle, isFavorite } = useFavorites()
   const fav = isFavorite(p.id)
@@ -64,13 +64,13 @@ function ProductCard({ p }: { p: Product }) {
         )}
       </div>
       <div style={{ padding: 16 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 800 }}>{p.name}</h3>
-        {p.description && <p className="muted" style={{ fontSize: 13, margin: '4px 0 10px' }}>{p.description}</p>}
+        <h3 style={{ fontSize: 16, fontWeight: 800 }}>{td(p.name)}</h3>
+        {p.description && <p className="muted" style={{ fontSize: 13, margin: '4px 0 10px' }}>{td(p.description)}</p>}
         {p.size_options?.length > 0 && (
-          <div style={{ marginBottom: 8 }}><label className="fld">{t('lbl_size')}</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.size_options.map(s => <button key={s.label} onClick={() => setSize(s.label)} className={'chip' + (size === s.label ? ' active' : '')}>{s.label}</button>)}</div></div>
+          <div style={{ marginBottom: 8 }}><label className="fld">{t('lbl_size')}</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.size_options.map(s => <button key={s.label} onClick={() => setSize(s.label)} className={'chip' + (size === s.label ? ' active' : '')}>{td(s.label)}</button>)}</div></div>
         )}
         {p.color_options?.length > 0 && (
-          <div style={{ marginBottom: 8 }}><label className="fld">{t('lbl_color')}</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.color_options.map(c => <button key={c.label} onClick={() => setColor(c.label)} className="chip" style={{ background: colorHex(c.label), color: colorText(colorHex(c.label)), borderColor: color === c.label ? 'var(--ink)' : colorHex(c.label), fontWeight: color === c.label ? 800 : 600 }}>{c.label}</button>)}</div></div>
+          <div style={{ marginBottom: 8 }}><label className="fld">{t('lbl_color')}</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.color_options.map(c => <button key={c.label} onClick={() => setColor(c.label)} className="chip" style={{ background: colorHex(c.label), color: colorText(colorHex(c.label)), borderColor: color === c.label ? 'var(--ink)' : colorHex(c.label), fontWeight: color === c.label ? 800 : 600 }}>{td(c.label)}</button>)}</div></div>
         )}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 10 }}>
           <div>
