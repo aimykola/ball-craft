@@ -31,7 +31,7 @@ export function Hero() {
   return (
     <section id="top" style={{ position: 'relative' }}>
       {/* Full-width editorial hero */}
-      <div style={{ position: 'relative', minHeight: 'clamp(460px,70vh,720px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg,var(--bg-soft) 0%,#efefe9 100%)', overflow: 'hidden' }}>
+      <div style={{ position: 'relative', minHeight: 'clamp(320px,48vh,480px)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'linear-gradient(180deg,var(--bg-soft) 0%,#efefe9 100%)', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: .4 }}>
           <div style={{ transform: 'scale(1.6)' }}><TableArt /></div>
         </div>
