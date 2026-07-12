@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { supabase } from '@/lib/supabaseClient'
+import { useLang } from '@/components/LanguageContext'
 
 function TableArt() {
   const balls = Array.from({ length: 15 })
@@ -16,12 +17,13 @@ function TableArt() {
         <div style={{ position: 'absolute', bottom: 0, left: 30, width: 8, height: 26, background: '#c9c9c2', borderRadius: 3 }} />
         <div style={{ position: 'absolute', bottom: 0, right: 30, width: 8, height: 26, background: '#c9c9c2', borderRadius: 3 }} />
       </div>
-      <span style={{ position: 'absolute', bottom: 16, left: 16, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>♥ 100% перероблені матеріали</span>
+      <span style={{ position: 'absolute', bottom: 16, left: 16, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>{t('badge_recycled')}</span>
     </div>
   )
 }
 
 export function Hero() {
+  const { t } = useLang()
   const [s, setS] = useState<any>({ hero_title: 'Кавові столики, що стають акцентом інтер’єру', hero_subtitle: 'Ручна робота, м’яка об’ємна текстура та скляна стільниця.' })
   useEffect(() => {
     supabase.from('tct_site_settings').select('*').then(({ data }: any) => {
@@ -36,12 +38,12 @@ export function Hero() {
           <div style={{ transform: 'scale(1.6)' }}><TableArt /></div>
         </div>
         <div style={{ position: 'relative', zIndex: 2, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(4px)', border: '1px solid var(--line)', padding: 'clamp(20px,3vw,36px) clamp(32px,5vw,56px)', maxWidth: '100%', width: 'calc(100% - 8px)', textAlign: 'center' }}>
-          <span className="eyebrow">Екодизайн · Ручна робота</span>
+          <span className="eyebrow">{t('hero_eyebrow')}</span>
           <h1 style={{ fontSize: 'clamp(30px,4.5vw,52px)', fontWeight: 400, letterSpacing: '-.005em', lineHeight: 1.12, margin: '16px 0 18px' }}>{s.hero_title}</h1>
           <p className="lead" style={{ marginBottom: 28, marginLeft: 'auto', marginRight: 'auto', maxWidth: 460 }}>{s.hero_subtitle}</p>
           <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', justifyContent: 'center' }}>
-            <a href="#catalog" className="btn btn-primary">Переглянути вироби</a>
-            <a href="#contacts" className="btn btn-ghost">Зв’язатись</a>
+            <a href="#catalog" className="btn btn-primary">{t('hero_cta_products')}</a>
+            <a href="#contacts" className="btn btn-ghost">{t('hero_cta_contact')}</a>
           </div>
         </div>
       </div>
@@ -50,10 +52,11 @@ export function Hero() {
 }
 
 export function Services() {
+  const { t } = useLang()
   const items = [
-    ['Безкоштовна доставка', 'По всій Україні при замовленні від 1200 грн.'],
-    ['Обмін та повернення', '14 днів на обмін або повернення виробу.'],
-    ['Індивідуальне замовлення', 'Виготовимо столик під ваш інтер’єр.'],
+    [t('svc1_t'), t('svc1_d')],
+    [t('svc2_t'), t('svc2_d')],
+    [t('svc3_t'), t('svc3_d')],
   ]
   return (
     <section style={{ borderTop: '1px solid var(--line)', borderBottom: '1px solid var(--line)', background: 'var(--bg)' }}>
@@ -70,16 +73,17 @@ export function Services() {
 }
 
 export function About() {
+  const { t } = useLang()
   const items = [
-    ['Друге життя м’ячів', 'Кожен столик — це десятки відпрацьованих тенісних м’ячів, що знайшли нове застосування.'],
-    ['Скляна стільниця', 'Загартоване скло робить поверхню міцною, легкою в догляді та візуально повітряною.'],
-    ['Ручна робота', 'Ми збираємо кожен виріб вручну — з увагою до деталей і геометрії.'],
+    [t('about1_t'), t('about1_d')],
+    [t('about2_t'), t('about2_d')],
+    [t('about3_t'), t('about3_d')],
   ]
   return (
     <section id="about" className="section" style={{ background: 'var(--bg-soft)' }}>
       <div className="container">
-        <span className="eyebrow">Чому обирають нас</span>
-        <h2 className="h2">Мінімалізм і турбота про планету</h2>
+        <span className="eyebrow">{t('about_title')}</span>
+        <h2 className="h2">{t('about_eyebrow')}</h2>
         <div className="grid cols-3" style={{ marginTop: 28 }}>
           {items.map((it, i) => (
             <div key={i} className="card" style={{ padding: 28 }}>
@@ -95,16 +99,17 @@ export function About() {
 }
 
 export function Reviews() {
+  const { t } = useLang()
   const items = [
-    ['Оксана', 'Столик став акцентом вітальні. Виглядає навіть краще, ніж на фото!'],
-    ['Андрій', 'Якісна збірка, скло приємне на дотик. І сама ідея переробки — супер.'],
-    ['Марія', 'Замовляла в подарунок — усі в захваті. Доставили швидко.'],
+    ['Оксана', t('rev1')],
+    ['Андрій', t('rev2')],
+    ['Марія', t('rev3')],
   ]
   return (
     <section id="reviews" className="section">
       <div className="container">
-        <span className="eyebrow">Відгуки</span>
-        <h2 className="h2">Що кажуть покупці</h2>
+        <span className="eyebrow">{t('reviews_title')}</span>
+        <h2 className="h2">{t('reviews_eyebrow')}</h2>
         <div className="grid cols-3" style={{ marginTop: 28 }}>
           {items.map((it, i) => (
             <div key={i} className="card" style={{ padding: 28 }}>
@@ -119,11 +124,17 @@ export function Reviews() {
 }
 
 export function Footer() {
+  const { t, lang, setLang } = useLang()
   return (
     <footer style={{ borderTop: '1px solid var(--line)', padding: '44px 0', background: 'var(--bg-soft)' }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, fontSize: 13 }}>
         <span className="muted" style={{ letterSpacing: '.04em' }}>© {new Date().getFullYear()}</span>
         <img src="/logo.png" alt="Ballcraft" style={{ height: 40, width: 'auto', display: 'block' }} />
+      </div>
+      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, marginTop: 18, fontSize: 13 }}>
+        <button onClick={() => setLang('uk')} aria-pressed={lang === 'uk'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'uk' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'uk' ? 600 : 400, borderBottom: lang === 'uk' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>Українська</button>
+        <span className="muted" style={{ opacity: .5 }}>/</span>
+        <button onClick={() => setLang('en')} aria-pressed={lang === 'en'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'en' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'en' ? 600 : 400, borderBottom: lang === 'en' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>English</button>
       </div>
     </footer>
   )
