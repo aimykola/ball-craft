@@ -5,7 +5,7 @@ import { priceWithDiscount } from '@/lib/types'
 import { useLang } from '@/components/LanguageContext'
 
 export default function CartDrawer() {
-  const { t } = useLang()
+  const { t, td } = useLang()
   const { items, isOpen, close, remove, setQty, total, clear } = useCart()
   const [checkout, setCheckout] = useState(false)
   const [form, setForm] = useState({ name: '', phone: '', email: '', delivery: '', payment: 'Наложений платіж', comment: '' })
@@ -43,7 +43,7 @@ export default function CartDrawer() {
             <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 14, paddingBottom: 14, borderBottom: '1px solid var(--line)' }}>
               <div style={{ width: 60, height: 60, borderRadius: 10, background: 'var(--bg-soft)', flexShrink: 0, overflow: 'hidden' }}>{it.product.image && <img src={it.product.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}</div>
               <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: 14 }}>{it.product.name}</div>
+                <div style={{ fontWeight: 700, fontSize: 14 }}>{td(it.product.name)}</div>
                 <div className="muted" style={{ fontSize: 12 }}>{[it.size, it.color].filter(Boolean).join(' · ')}</div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 6 }}>
                   <button onClick={() => setQty(it.product.id, it.qty - 1, it.size, it.color)} className="chip">−</button>
