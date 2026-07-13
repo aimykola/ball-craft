@@ -171,6 +171,13 @@ export function Footer() {
           {navLinks.map((l) => (<a key={l.href} href={l.href} style={linkStyle}>{l.label}</a>))}
         </div>
         <div>
+          <div style={headStyle}>{t('footer_info')}</div>
+          <a href="/delivery" style={linkStyle}>{t('nav_delivery')}</a>
+          <a href="/returns" style={linkStyle}>{t('nav_returns')}</a>
+          <a href="/faq" style={linkStyle}>{t('nav_faq')}</a>
+          <a href="/privacy" style={linkStyle}>{t('nav_privacy')}</a>
+        </div>
+        <div>
           <div style={headStyle}>{t('footer_follow')}</div>
           {socials.map((so) => (<a key={so.label} href={so.href} target="_blank" rel="noopener noreferrer" style={linkStyle}>{so.label}</a>))}
         </div>
