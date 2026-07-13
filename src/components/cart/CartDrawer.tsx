@@ -11,6 +11,7 @@ export default function CartDrawer() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', delivery: '', payment: 'Наложений платіж', comment: '' })
   const [msg, setMsg] = useState('')
   const [sending, setSending] = useState(false)
+  const [orderDone, setOrderDone] = useState<string | null>(null)
 
   const submit = async () => {
     if (!form.name.trim() || !form.phone.trim()) { setMsg(t('err_name_phone')); return }
@@ -26,7 +27,7 @@ export default function CartDrawer() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || t('err'))
-      setMsg(t('order_thanks')); clear(); setCheckout(false)
+      setOrderDone(String(data.id || '').slice(0, 8).toUpperCase()); clear(); setCheckout(false); setForm({ name: '', phone: '', email: '', delivery: '', payment: 'Наложений платіж', comment: '' })
     } catch (e: any) { setMsg(e.message) } finally { setSending(false) }
   }
 
@@ -36,9 +37,21 @@ export default function CartDrawer() {
       <aside style={{ position: 'fixed', top: 0, right: 0, bottom: 0, width: 'min(420px,100%)', background: '#fff', boxShadow: '-10px 0 40px rgba(0,0,0,.1)', transform: isOpen ? 'translateX(0)' : 'translateX(100%)', transition: '.25s', zIndex: 61, display: 'flex', flexDirection: 'column' }}>
         <div style={{ padding: 18, borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <strong style={{ fontSize: 18 }}>{t('cart_title')}</strong>
-          <button onClick={close} className="btn btn-ghost" style={{ padding: '6px 12px' }}>✕</button>
+          <button onClick={() => { setOrderDone(null); close() }} className="btn btn-ghost" style={{ padding: '6px 12px' }}>✕</button>
         </div>
-        <div style={{ flex: 1, overflow: 'auto', padding: 18 }} className="hidden-scroll">
+        {orderDone ? (
+        <div style={{ flex: 1, overflow: 'auto', padding: '40px 24px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+          <div style={{ width: 64, height: 64, borderRadius: '50%', background: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 30, marginBottom: 20 }}>✓</div>
+          <h3 style={{ fontSize: 22, fontWeight: 800, marginBottom: 10 }}>{t('order_success_title')}</h3>
+          <p className="muted" style={{ fontSize: 14, lineHeight: 1.6, marginBottom: 18, maxWidth: 300 }}>{t('order_success_text')}</p>
+          <div style={{ background: 'var(--bg-soft)', border: '1px solid var(--line)', borderRadius: 6, padding: '12px 20px', marginBottom: 26 }}>
+            <div className="muted" style={{ fontSize: 12, letterSpacing: '.08em', textTransform: 'uppercase', marginBottom: 4 }}>{t('order_number')}</div>
+            <div style={{ fontSize: 20, fontWeight: 800, letterSpacing: '.05em' }}>#{orderDone}</div>
+          </div>
+          <button className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={() => { setOrderDone(null); close() }}>{t('continue_shopping')}</button>
+        </div>
+      ) : (
+        <><div style={{ flex: 1, overflow: 'auto', padding: 18 }} className="hidden-scroll">
           {items.length === 0 ? <p className="muted">{t('cart_empty')}</p> : items.map((it, i) => (
             <div key={i} style={{ display: 'flex', gap: 12, marginBottom: 14, paddingBottom: 14, borderBottom: '1px solid var(--line)' }}>
               <div style={{ width: 60, height: 60, borderRadius: 10, background: 'var(--bg-soft)', flexShrink: 0, overflow: 'hidden' }}>{it.product.image && <img src={it.product.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}</div>
@@ -73,7 +86,8 @@ export default function CartDrawer() {
           )}
           {msg && <p style={{ fontSize: 13, marginTop: 8, color: 'var(--accent-deep)', fontWeight: 600 }}>{msg}</p>}
         </div>
-      </aside>
+      </>
+      )}</aside>
     </>
   )
 }
