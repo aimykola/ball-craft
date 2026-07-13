@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useMemo, useState } from 'react'
+import Link from 'next/link'
 import { supabase } from '@/lib/supabaseClient'
 import { useCart } from '@/components/cart/CartContext'
 import { useFavorites } from '@/components/favorites/FavoritesContext'
@@ -47,7 +48,7 @@ function ProductCard({ p }: { p: Product }) {
   return (
     <div className="card">
       <div style={{ position: 'relative', aspectRatio: '4/3', background: 'var(--bg-soft)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        {imgs[idx] ? <img src={imgs[idx]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span className="muted" style={{ fontSize: 13 }}>{t('no_photo')}</span>}
+        {imgs[idx] ? <Link href={`/product/${p.id}`} style={{ display: 'block', width: '100%', height: '100%' }}><img src={imgs[idx]} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></Link> : <span className="muted" style={{ fontSize: 13 }}>{t('no_photo')}</span>}
         {hasDisc && <span className="badge" style={{ left: 10, background: '#ff6b6b', color: '#fff' }}>-{p.discount}%</span>}
         <span className="badge" style={{ right: 10, background: p.in_stock ? 'var(--accent)' : '#e2e4dd', color: '#1c1e18' }}>{p.in_stock ? t('f_instock') : t('f_outstock')}</span>
         <button
@@ -64,7 +65,7 @@ function ProductCard({ p }: { p: Product }) {
         )}
       </div>
       <div style={{ padding: 16 }}>
-        <h3 style={{ fontSize: 16, fontWeight: 800 }}>{td(p.name)}</h3>
+        <Link href={`/product/${p.id}`} style={{ color: 'inherit', textDecoration: 'none' }}><h3 style={{ fontSize: 16, fontWeight: 800 }}>{td(p.name)}</h3></Link>
         {p.description && <p className="muted" style={{ fontSize: 13, margin: '4px 0 10px' }}>{td(p.description)}</p>}
         {p.size_options?.length > 0 && (
           <div style={{ marginBottom: 8 }}><label className="fld">{t('lbl_size')}</label><div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>{p.size_options.map(s => <button key={s.label} onClick={() => setSize(s.label)} className={'chip' + (size === s.label ? ' active' : '')}>{td(s.label)}</button>)}</div></div>
