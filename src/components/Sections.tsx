@@ -125,17 +125,65 @@ export function Reviews() {
 }
 
 export function Footer() {
-  const { lang, setLang } = useLang()
+  const { lang, setLang, t } = useLang()
+  const [s, setS] = useState<any>({})
+  useEffect(() => {
+    supabase.from('tct_site_settings').select('*').then(({ data }: any) => {
+      if (data) { const o: any = {}; data.forEach((r: any) => { o[r.key] = r.value }); setS(o) }
+    })
+  }, [])
+
+  const telHref = (v: string) => 'tel:' + (v || '').replace(/[^+0-9]/g, '')
+  const igHref = s.instagram_url ? (s.instagram_url.startsWith('http') ? s.instagram_url : 'https://instagram.com/' + s.instagram_url.replace(/^@/, '')) : ''
+  const tgHref = s.telegram ? (s.telegram.startsWith('http') ? s.telegram : 'https://t.me/' + s.telegram.replace(/^@/, '')) : ''
+  const socials = [
+    igHref && { label: 'Instagram', href: igHref },
+    tgHref && { label: 'Telegram', href: tgHref },
+    s.tiktok && { label: 'TikTok', href: s.tiktok.startsWith('http') ? s.tiktok : 'https://tiktok.com/@' + s.tiktok.replace(/^@/, '') },
+    s.facebook && { label: 'Facebook', href: s.facebook.startsWith('http') ? s.facebook : 'https://facebook.com/' + s.facebook },
+  ].filter(Boolean) as { label: string; href: string }[]
+
+  const navLinks = [
+    { label: t('nav_catalog'), href: '#catalog' },
+    { label: t('nav_about'), href: '#about' },
+    { label: t('nav_reviews'), href: '#reviews' },
+    { label: t('nav_contacts'), href: '#contacts' },
+  ]
+
+  const linkStyle: any = { color: 'var(--muted)', textDecoration: 'none', fontSize: 13.5, letterSpacing: '.02em', display: 'block', marginBottom: 12, transition: 'color .2s' }
+  const headStyle: any = { fontSize: 13, letterSpacing: '.14em', textTransform: 'uppercase', color: 'var(--ink)', marginBottom: 20, fontWeight: 600 }
+
   return (
-    <footer style={{ borderTop: '1px solid var(--line)', padding: '44px 0', background: 'var(--bg-soft)' }}>
-      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 14, fontSize: 13 }}>
-        <span className="muted" style={{ letterSpacing: '.04em' }}>© {new Date().getFullYear()}</span>
-        <img src="/logo.png" alt="Ballcraft" style={{ height: 40, width: 'auto', display: 'block' }} />
+    <footer style={{ borderTop: '1px solid var(--line)', background: 'var(--bg-soft)' }}>
+      <div className="container" style={{ padding: '56px 0 32px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 40 }}>
+        <div>
+          <img src="/logo.png" alt="Ballcraft" style={{ height: 46, width: 'auto', display: 'block', marginBottom: 18 }} />
+          <p className="muted" style={{ fontSize: 13.5, lineHeight: 1.7, maxWidth: 260 }}>{t('footer_about')}</p>
+        </div>
+        <div>
+          <div style={headStyle}>{t('footer_contacts')}</div>
+          {s.phone && <a href={telHref(s.phone)} style={linkStyle}>{s.phone}</a>}
+          {s.email && <a href={'mailto:' + s.email} style={linkStyle}>{s.email}</a>}
+          {s.viber && <a href={s.viber.startsWith('http') ? s.viber : 'viber://chat?number=' + s.viber.replace(/[^+0-9]/g, '')} style={linkStyle}>Viber</a>}
+        </div>
+        <div>
+          <div style={headStyle}>{t('footer_nav')}</div>
+          {navLinks.map((l) => (<a key={l.href} href={l.href} style={linkStyle}>{l.label}</a>))}
+        </div>
+        <div>
+          <div style={headStyle}>{t('footer_follow')}</div>
+          {socials.map((so) => (<a key={so.label} href={so.href} target="_blank" rel="noopener noreferrer" style={linkStyle}>{so.label}</a>))}
+        </div>
       </div>
-      <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 10, marginTop: 18, fontSize: 13 }}>
-        <button onClick={() => setLang('uk')} aria-pressed={lang === 'uk'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'uk' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'uk' ? 600 : 400, borderBottom: lang === 'uk' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>Українська</button>
-        <span className="muted" style={{ opacity: .5 }}>/</span>
-        <button onClick={() => setLang('en')} aria-pressed={lang === 'en'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'en' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'en' ? 600 : 400, borderBottom: lang === 'en' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>English</button>
+      <div style={{ borderTop: '1px solid var(--line)' }}>
+        <div className="container" style={{ padding: '22px 0', display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16 }}>
+          <span className="muted" style={{ fontSize: 12.5, letterSpacing: '.04em' }}>© {new Date().getFullYear()} Ballcraft. {t('footer_rights')}</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, fontSize: 13 }}>
+            <button onClick={() => setLang('uk')} aria-pressed={lang === 'uk'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'uk' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'uk' ? 600 : 400, borderBottom: lang === 'uk' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>Українська</button>
+            <span className="muted" style={{ opacity: .5 }}>/</span>
+            <button onClick={() => setLang('en')} aria-pressed={lang === 'en'} style={{ background: 'none', border: 'none', padding: '4px 6px', cursor: 'pointer', color: lang === 'en' ? 'var(--ink)' : 'var(--muted)', fontWeight: lang === 'en' ? 600 : 400, borderBottom: lang === 'en' ? '1px solid var(--ink)' : '1px solid transparent', letterSpacing: '.02em' }}>English</button>
+          </div>
+        </div>
       </div>
     </footer>
   )
