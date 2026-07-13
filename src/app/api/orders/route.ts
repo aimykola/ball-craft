@@ -29,16 +29,35 @@ export async function POST(req: Request) {
     const resendKey = process.env.RESEND_API_KEY
     const to = process.env.ORDER_EMAIL_TO
     const from = process.env.ORDER_EMAIL_FROM
+    const orderNo = String(data.id || '').slice(0, 8).toUpperCase()
+    const lines = (items || []).map((i: any) => `• ${i.name} ×${i.qty} — ${i.price} ₴`).join('<br>')
+
+    // Admin notification
     if (resendKey && to && from) {
       try {
-        const lines = (items || []).map((i: any) => `• ${i.name} ×${i.qty} — ${i.price} ₴`).join('<br>')
         await fetch('https://api.resend.com/emails', {
           method: 'POST',
           headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
           body: JSON.stringify({
             from, to,
-            subject: `Нове замовлення — ${customer_name}`,
-            html: `<h2>Нове замовлення</h2><p>${customer_name}, ${customer_phone}</p><p>${delivery || ''}</p>${lines}<p><b>Разом: ${total} ₴</b></p><p>${comment || ''}</p>`,
+            subject: `Нове замовлення #${orderNo} — ${customer_name}`,
+            html: `<h2>Нове замовлення #${orderNo}</h2><p>${customer_name}, ${customer_phone}</p><p>${customer_email || ''}</p><p>${delivery || ''}</p>${lines}<p><b>Разом: ${total} ₴</b></p><p>${comment || ''}</p>`,
+          }),
+        })
+      } catch {}
+    }
+
+    // Customer confirmation
+    if (resendKey && from && customer_email) {
+      try {
+        await fetch('https://api.resend.com/emails', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${resendKey}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            from,
+            to: customer_email,
+            subject: `Ballcraft — замовлення #${orderNo} прийнято`,
+            html: `<div style="font-family:Arial,sans-serif;max-width:520px;margin:0 auto;color:#1c1e18"><h2 style="color:#1c1e18">Дякуємо за замовлення!</h2><p>${customer_name}, ми отримали ваше замовлення <b>#${orderNo}</b> і звʼяжемося з вами найближчим часом для підтвердження.</p><h3>Ваше замовлення</h3><p>${lines}</p><p style="font-size:16px"><b>Разом: ${total} ₴</b></p>${delivery ? `<p>Доставка: ${delivery}</p>` : ''}<hr style="border:none;border-top:1px solid #e5e5e0;margin:20px 0"><p style="color:#8a8d84;font-size:13px">Ballcraft — дизайнерські вироби ручної роботи.</p></div>`,
           }),
         })
       } catch {}
