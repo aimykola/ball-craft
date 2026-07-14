@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from '@/components/cart/CartContext'
 import { FavoritesProvider } from '@/components/favorites/FavoritesContext'
 import { LanguageProvider } from '@/components/LanguageContext'
+import CookieConsent from '@/components/CookieConsent'
 
 const forum = Forum({ subsets: ['latin', 'cyrillic'], weight: '400', variable: '--font-sans' })
 const cormorant = Cormorant({ subsets: ['latin', 'cyrillic'], weight: ['400', '500', '600'], variable: '--font-serif' })
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             {children}
           </FavoritesProvider>
         </CartProvider>
+        <CookieConsent />
         </LanguageProvider>
       </body>
     </html>
