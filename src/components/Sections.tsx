@@ -144,10 +144,10 @@ export function Footer() {
   ].filter(Boolean) as { label: string; href: string }[]
 
   const navLinks = [
-    { label: t('nav_catalog'), href: '#catalog' },
-    { label: t('nav_about'), href: '#about' },
-    { label: t('nav_reviews'), href: '#reviews' },
-    { label: t('nav_contacts'), href: '#contacts' },
+    { label: t('nav_catalog'), href: '/#catalog' },
+    { label: t('nav_about'), href: '/#about' },
+    { label: t('nav_reviews'), href: '/#reviews' },
+    { label: t('nav_contacts'), href: '/#contacts' },
   ]
 
   const linkStyle: any = { color: 'var(--muted)', textDecoration: 'none', fontSize: 13.5, letterSpacing: '.02em', display: 'block', marginBottom: 12, transition: 'color .2s' }
