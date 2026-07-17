@@ -52,6 +52,7 @@ export default function ProductPage() {
   const [size, setSize] = useState<string | undefined>(undefined)
   const [color, setColor] = useState<string | undefined>(undefined)
   const [added, setAdded] = useState(false)
+  const [lightbox, setLightbox] = useState(false)
 
   useEffect(() => {
     (async () => {
@@ -92,7 +93,7 @@ export default function ProductPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 44, alignItems: 'start' }}>
             <div>
               <div style={{ position: 'relative', aspectRatio: '1 / 1', background: 'var(--bg-soft)', borderRadius: 6, overflow: 'hidden', border: '1px solid var(--line)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {imgs[idx] ? <img src={imgs[idx]} alt={td(p.name)} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : <span className="muted">{t('no_photo')}</span>}
+                {imgs[idx] ? <img src={imgs[idx]} alt={td(p.name)} onClick={() => setLightbox(true)} style={{ width: '100%', height: '100%', objectFit: 'cover', cursor: 'zoom-in' }} /> : <span className="muted">{t('no_photo')}</span>}
                 {hasDisc && <span className="badge" style={{ left: 10, background: '#ff6b6b', color: '#fff' }}>-{p.discount}%</span>}
               </div>
               {imgs.length > 1 && (
@@ -145,6 +146,44 @@ export default function ProductPage() {
           </div>
         )}
       </main>
+      {lightbox && imgs[idx] && (
+        <div
+          onClick={() => setLightbox(false)}
+          style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(20,21,17,.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
+        >
+          <button
+            onClick={(e) => { e.stopPropagation(); setLightbox(false) }}
+            aria-label="Close"
+            style={{ position: 'absolute', top: 20, right: 24, width: 44, height: 44, borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,.12)', color: '#fff', fontSize: 22, lineHeight: 1, cursor: 'pointer' }}
+          >
+            ✕
+          </button>
+          {imgs.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setIdx((idx - 1 + imgs.length) % imgs.length) }}
+              aria-label="Prev"
+              style={{ position: 'absolute', left: 24, top: '50%', transform: 'translateY(-50%)', width: 48, height: 48, borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,.12)', color: '#fff', fontSize: 24, cursor: 'pointer' }}
+            >
+              ‹
+            </button>
+          )}
+          <img
+            src={imgs[idx]}
+            alt={td(p.name)}
+            onClick={(e) => e.stopPropagation()}
+            style={{ maxWidth: '92vw', maxHeight: '88vh', objectFit: 'contain', borderRadius: 4 }}
+          />
+          {imgs.length > 1 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setIdx((idx + 1) % imgs.length) }}
+              aria-label="Next"
+              style={{ position: 'absolute', right: 24, top: '50%', transform: 'translateY(-50%)', width: 48, height: 48, borderRadius: '50%', border: 'none', background: 'rgba(255,255,255,.12)', color: '#fff', fontSize: 24, cursor: 'pointer' }}
+            >
+              ›
+            </button>
+          )}
+        </div>
+      )}
       <Footer />
       <CartDrawer />
       <FavoritesDrawer />
