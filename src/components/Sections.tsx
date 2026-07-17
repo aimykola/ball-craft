@@ -4,7 +4,6 @@ import { supabase } from '@/lib/supabaseClient'
 import { useLang } from '@/components/LanguageContext'
 
 function TableArt() {
-  const { t } = useLang()
   const balls = Array.from({ length: 15 })
   return (
     <div style={{ position: 'relative', background: 'var(--bg-soft)', borderRadius: 4, padding: 34, minHeight: 300, display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--line)' }}>
@@ -18,7 +17,6 @@ function TableArt() {
         <div style={{ position: 'absolute', bottom: 0, left: 30, width: 8, height: 26, background: '#c9c9c2', borderRadius: 3 }} />
         <div style={{ position: 'absolute', bottom: 0, right: 30, width: 8, height: 26, background: '#c9c9c2', borderRadius: 3 }} />
       </div>
-      <span style={{ position: 'absolute', bottom: 16, left: 16, fontSize: 11, fontWeight: 600, letterSpacing: '.1em', textTransform: 'uppercase', color: 'var(--muted)' }}>{t('badge_recycled')}</span>
     </div>
   )
 }
