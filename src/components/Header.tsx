@@ -34,7 +34,7 @@ export default function Header() {
       </div>
       {/* Centered logo row */}
       <div className="container" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden', transition: 'max-height .35s ease, opacity .3s ease', maxHeight: hideLogo ? 0 : 96, opacity: hideLogo ? 0 : 1 }}>
-        <Link href="#top" style={{ display: 'flex', alignItems: 'center' }} aria-label="Ballcraft">
+        <Link href="/" style={{ display: 'flex', alignItems: 'center' }} aria-label="Ballcraft">
           <img src="/logo.png" alt="Ballcraft" style={{ height: 180, width: 'auto', display: 'block', transform: 'translateY(11px)' }} />
         </Link>
         <button className="burger" onClick={() => setMenuOpen(!menuOpen)} aria-label={t('aria_menu')} aria-expanded={menuOpen} style={{ position: 'absolute', right: 0, background: 'none', border: 'none', padding: 8, cursor: 'pointer', color: 'var(--ink)' }}>
@@ -45,10 +45,10 @@ export default function Header() {
       </div>
       {/* Centered nav + icons row below logo */}
       <nav className="nav-links" style={{ justifyContent: 'center', alignItems: 'center', gap: 28, transition: 'padding .35s ease', padding: scrolled ? '12px 0' : '4px 0 14px' }}>
-        <Link href="#catalog" className="nav-link">{t('nav_catalog')}</Link>
-        <Link href="#about" className="nav-link">{t('nav_about')}</Link>
-        <Link href="#reviews" className="nav-link">{t('nav_reviews')}</Link>
-        <Link href="#contacts" className="nav-link">{t('nav_contacts')}</Link>
+        <Link href="/#catalog" className="nav-link">{t('nav_catalog')}</Link>
+        <Link href="/#about" className="nav-link">{t('nav_about')}</Link>
+        <Link href="/#reviews" className="nav-link">{t('nav_reviews')}</Link>
+        <Link href="/#contacts" className="nav-link">{t('nav_contacts')}</Link>
         <span style={{ display: 'inline-block', width: 1, height: 16, background: 'var(--line)', margin: '0 4px' }} />
         <Link href="/account" className="nav-link" aria-label={t('aria_account')} style={{ display: 'flex', alignItems: 'center' }}>
           <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
@@ -67,10 +67,10 @@ export default function Header() {
       {menuOpen && (
         <div className="mobile-menu" style={{ borderTop: '1px solid var(--line)', background: 'var(--bg)' }}>
           <div className="container" style={{ display: 'flex', flexDirection: 'column', padding: '8px 20px 16px' }}>
-            <Link href="#catalog" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_catalog')}</Link>
-            <Link href="#about" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_about')}</Link>
-            <Link href="#reviews" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_reviews')}</Link>
-            <Link href="#contacts" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15 }}>{t('nav_contacts')}</Link>
+            <Link href="/#catalog" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_catalog')}</Link>
+            <Link href="/#about" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_about')}</Link>
+            <Link href="/#reviews" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15, borderBottom: '1px solid var(--line)' }}>{t('nav_reviews')}</Link>
+            <Link href="/#contacts" className="nav-link" onClick={closeMenu} style={{ padding: '12px 0', fontSize: 15 }}>{t('nav_contacts')}</Link>
           </div>
         </div>
       )}
