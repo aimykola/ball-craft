@@ -146,7 +146,7 @@ export default function ProductPage() {
           </div>
         )}
       </main>
-      {lightbox && imgs[idx] && (
+      {lightbox && p && imgs[idx] && (
         <div
           onClick={() => setLightbox(false)}
           style={{ position: 'fixed', inset: 0, zIndex: 1000, background: 'rgba(20,21,17,.92)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}
