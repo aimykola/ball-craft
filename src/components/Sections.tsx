@@ -38,7 +38,7 @@ export function Hero() {
         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: .4 }}>
           <div style={{ transform: 'scale(1.6)' }}><TableArt /></div>
         </div>
-        <div style={{ position: 'relative', zIndex: 2, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(4px)', border: '1px solid var(--line)', padding: 'clamp(20px,3vw,36px) clamp(32px,5vw,56px)', maxWidth: '100%', width: 'calc(100% - 8px)', textAlign: 'center' }}>
+        <div style={{ position: 'relative', zIndex: 2, background: 'rgba(255,255,255,.86)', backdropFilter: 'blur(4px)', border: '1px solid var(--line)', padding: 'clamp(20px,3vw,36px) clamp(32px,5vw,56px)', maxWidth: 720, width: 'calc(100% - 48px)', textAlign: 'center' }}>
           <span className="eyebrow">{t('hero_eyebrow')}</span>
           <h1 style={{ fontSize: 'clamp(30px,4.5vw,52px)', fontWeight: 400, letterSpacing: '-.005em', lineHeight: 1.12, margin: '16px 0 18px' }}>{lang === 'en' ? t('hero_title') : td(s.hero_title)}</h1>
           <p className="lead" style={{ marginBottom: 28, marginLeft: 'auto', marginRight: 'auto', maxWidth: 460 }}>{lang === 'en' ? t('hero_subtitle') : td(s.hero_subtitle)}</p>
